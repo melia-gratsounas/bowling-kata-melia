@@ -80,3 +80,31 @@ const frames = [
   [2, 6],
   [4, 4],
 ]
+
+function isStrike(frame) {
+  return frame[0] === 10
+}
+
+function scoreWithStrikesAndSpares(frames) {
+  let totalScore = 0
+
+  for (let i = 0; i < frames.length - 1; i++) {
+    const strikeAndSpareFrame = frames[i]
+    // If it's a strike, score = 10 + next two balls
+    if (isStrike(strikeAndSpareFrame)) {
+      totalScore += 10 + frames[i + 1][0] + frames[i + 1][1]
+      // If it's a spare, score = 10 + next one ball
+    } else if (isSpare(strikeAndSpareFrame)) {
+      totalScore += 10 + frames[i + 1][0]
+    } else {
+      totalScore += strikeAndSpareFrame[0] + strikeAndSpareFrame[1]
+    }
+  }
+
+  const lastFrame = frames[frames.length - 1]
+  totalScore += lastFrame[0] + lastFrame[1]
+
+  return totalScore
+}
+
+console.log(scoreWithStrikesAndSpares(frames))
